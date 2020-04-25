@@ -1,0 +1,26 @@
+{
+  "name": "examserver",
+  "version": "1.0.0",
+  "description": "For creating and administering exams.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/carwyn987/TestAdministrator.git"
+  },
+  "keywords": [
+    "exams"
+  ],
+  "author": "Carwyn Collinsworth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carwyn987/TestAdministrator/issues"
+  },
+  "homepage": "https://github.com/carwyn987/TestAdministrator#readme",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.1"
+  }
+}
