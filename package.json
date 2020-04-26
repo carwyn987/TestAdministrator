@@ -4,7 +4,10 @@
   "description": "For creating and administering exams.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "nodemon index.js",
+    "lint": "eslint . --ext=js --fix",
+    "watchLint": "esw . --fix --watch"
   },
   "repository": {
     "type": "git",
@@ -20,7 +23,21 @@
   },
   "homepage": "https://github.com/carwyn987/TestAdministrator#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "esm": "^3.2.25",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-async-wrap": "^1.0.0",
+    "pg": "^8.0.3",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.7",
+    "sequelize-cli": "^5.5.1",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-watch": "^6.0.1",
+    "nodemon": "^2.0.3"
   }
 }
