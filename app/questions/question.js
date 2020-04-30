@@ -5,20 +5,23 @@ import { sequelize } from '../postgres/postgres'
 
 class Question extends Model {}
 
+/**
+ * @param {String} id A unique (random) UUIDV4 (universally unique identifier) to identify each question.
+ * @param {String} questionType An enum that defines whether the question is true false, multiple choice, or short answer.
+ * @param {String} questionText A question.
+ * @param {String} multiChoices Array of choices.
+ * @param {String} multiChoiceAnswer Correct answer.
+ */
 Question.init({
-  id: { type: Sequelize.UUIDV4, defualtValue: Sequelize.UUIDV4, primaryKey: true },
+  id: { type: Sequelize.UUID, primaryKey: true },
   questionType: {
     type: Sequelize.ENUM,
     values: ['multichoice', 'freeform', 'boolean'],
     allowNull: false,
   },
   questionText: DataTypes.TEXT,
-  multiChoiceA: DataTypes.TEXT,
-  multiChoiceB: DataTypes.TEXT,
-  multiChoiceC: DataTypes.TEXT,
-  multiChoiceD: DataTypes.TEXT,
-  multiChoiceE: DataTypes.TEXT,
-  multiChoiceAnswer: DataTypes.CHAR,
+  multiChoices: DataTypes.ARRAY(DataTypes.TEXT),
+  multiChoiceAnswer: DataTypes.INTEGER,
   boolAnswer: DataTypes.BOOLEAN,
 }, { sequelize, modelName: 'question' })
 

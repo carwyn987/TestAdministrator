@@ -8,7 +8,7 @@ import { getQuestions, deleteQuestions, createQuestion } from './questions/quest
 
 const app = express()
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }))
 app.use(bodyParser.json())
 
