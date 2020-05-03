@@ -1,5 +1,5 @@
 import { Sequelize, Model, DataTypes } from 'sequelize'
-import { text } from 'express'
+// import { text } from 'express'
 import { v4 as UUIDV4 } from 'uuid'
 import { sequelize } from '../postgres/postgres'
 
@@ -26,24 +26,34 @@ Question.init({
 }, { sequelize, modelName: 'question' })
 
 export async function createQuestion(req, resp) {
-  console.log(req.body)
   const question = req.body
-  console.log(question)
   question.id = UUIDV4()
-  console.log(question)
   await sequelize.sync()
   const q = await Question.create(question)
   resp.json(q)
 }
 
 export async function getQuestions(req, resp) {
-  const questions = await Question.findAll()
-  console.log(questions)
+  const questions = await Question.findAll({
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+  })
+  const arr = []
+  questions.forEach((e) => {
+    arr.push(e.dataValues)
+  })
   resp.json(questions)
 }
 
 export async function deleteQuestions(req, resp) {
   const questions = await Question.destroy({ truncate: true })
-  console.log(questions)
   resp.json(questions)
+}
+
+export async function deleteQuestion(req, resp) {
+  const rowsDeleted = await Question.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+  resp.json({ rowsDeleted })
 }
