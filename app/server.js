@@ -3,6 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 import cors from 'cors'
+import fileUpload from 'express-fileupload'
 
 // eslint-disable-next-line no-unused-vars
 import * as e from '../env'
@@ -45,5 +46,22 @@ app.options('/question/:id', cors(corsOptions))
 app.delete('/question/:id', cors(corsOptions), wrap(deleteQuestion))
 
 app.post('/question', cors(corsOptions), wrap(createQuestion))
+
+app.use(fileUpload({
+  preserveExtension: true,
+  abortOnLimit: true,
+  createParentPath: true,
+  debug: true,
+  limits: { fileSize: 50 * 1024 * 1024 },
+  useTempFiles: true,
+  tempFileDir: 'tmp/',
+}))
+
+app.post('/upload', cors(corsOptions), wrap(fileUpload2))
+
+async function fileUpload2(req, res) {
+  console.log(req.files.foo) // the uploaded file object
+  res.send()
+}
 
 app.listen(8080)
