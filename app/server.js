@@ -5,13 +5,14 @@ import path from 'path'
 import cors from 'cors'
 import fileUpload from 'express-fileupload'
 
-// eslint-disable-next-line no-unused-vars
-import * as e from '../env'
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
+import env from '../env'
 import * as pg from './postgres/postgres'
+import * as uploads from './questions/uploads'
+/* eslint-enable no-unused-vars */
 
 import {
-  getQuestions, deleteQuestions, createQuestion, deleteQuestion,
+  getQuestionsREST, deleteQuestions, createQuestionREST, deleteQuestion,
 } from './questions/question'
 
 const app = express()
@@ -38,14 +39,14 @@ app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, '../public'), options))
 
-app.get('/questions', cors(corsOptions), wrap(getQuestions))
+app.get('/questions', cors(corsOptions), wrap(getQuestionsREST))
 
 app.delete('/questions', cors(corsOptions), wrap(deleteQuestions))
 
 app.options('/question/:id', cors(corsOptions))
 app.delete('/question/:id', cors(corsOptions), wrap(deleteQuestion))
 
-app.post('/question', cors(corsOptions), wrap(createQuestion))
+app.post('/question', cors(corsOptions), wrap(createQuestionREST))
 
 app.use(fileUpload({
   preserveExtension: true,
@@ -60,7 +61,7 @@ app.use(fileUpload({
 app.post('/upload', cors(corsOptions), wrap(fileUpload2))
 
 async function fileUpload2(req, res) {
-  console.log(req.files.foo) // the uploaded file object
+  // console.log(req.files.foo) // the uploaded file object
   res.send()
 }
 

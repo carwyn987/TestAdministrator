@@ -25,15 +25,40 @@ Question.init({
   boolAnswer: DataTypes.BOOLEAN,
 }, { sequelize, modelName: 'question' })
 
-export async function createQuestion(req, resp) {
+export async function getQuestion(qText) {
+  const question = await Question.findOne({
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+    where: {
+      questionText: qText,
+    },
+  })
+  return question
+}
+
+export async function createQuestionREST(req, resp) {
   const question = req.body
-  question.id = UUIDV4()
-  await sequelize.sync()
-  const q = await Question.create(question)
+  const q = createQuestion(question)
   resp.json(q)
 }
 
-export async function getQuestions(req, resp) {
+export async function createQuestion(question) {
+  const oldQ = await getQuestion(question.questionText)
+  // TODO: do not delete overridden question, just update it. Delete breaks existing FKs.
+  if (oldQ != null) {
+    await Question.destroy({
+      where: {
+        id: oldQ.dataValues.id,
+      },
+    })
+  }
+  // eslint-disable-next-line no-param-reassign
+  question.id = UUIDV4()
+  await sequelize.sync()
+  const q = await Question.create(question)
+  return q
+}
+
+export async function getQuestionsREST(req, resp) {
   const questions = await Question.findAll({
     attributes: { exclude: ['createdAt', 'updatedAt'] },
   })
