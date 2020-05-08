@@ -59,9 +59,17 @@ export async function createQuestion(question) {
 }
 
 export async function getQuestionsREST(req, resp) {
-  const questions = await Question.findAll({
+  const { admin } = req.query
+  const isAdmin = admin === 'true'
+  const query = {
     attributes: { exclude: ['createdAt', 'updatedAt'] },
-  })
+  }
+  if (!isAdmin) {
+    query.attributes.exclude.push('boolAnswer')
+    query.attributes.exclude.push('multiChoiceAnswer')
+  }
+  console.log(query)
+  const questions = await Question.findAll(query)
   const arr = []
   questions.forEach((e) => {
     arr.push(e.dataValues)

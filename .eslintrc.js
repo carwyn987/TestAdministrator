@@ -8,6 +8,7 @@ module.exports = {
       "import/no-extraneous-dependencies": ['error', { devDependencies: true }],
       "max-len": "off", 
       "import/prefer-default-export" : "off",
-      "no-use-before-define": "off"
+      "no-use-before-define": "off",
+      'no-plusplus': 'off'
     }
 };

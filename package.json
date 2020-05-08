@@ -30,6 +30,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-async-wrap": "^1.0.0",
+    "express-basic-auth": "^1.2.0",
     "express-fileupload": "^1.1.7-alpha.3",
     "pg": "^8.0.3",
     "pg-hstore": "^2.3.3",

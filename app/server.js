@@ -5,6 +5,7 @@ import path from 'path'
 import cors from 'cors'
 import fileUpload from 'express-fileupload'
 import fs from 'fs'
+import basicAuth from 'express-basic-auth'
 
 /* eslint-disable no-unused-vars */
 import env from '../env'
@@ -21,8 +22,14 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }))
 
+app.use(basicAuth({
+  users: {'admin': 'sbu-cazamsPass123!'},
+  challenge: true,
+  realm: 'Imb4T3st4pp'
+}))
+
 const options = {
-  index: 'index.html',
+  index: 'menuBar.html',
 }
 
 const corsOptions = {
@@ -49,9 +56,9 @@ app.delete('/question/:id', cors(corsOptions), wrap(deleteQuestion))
 
 app.post('/question', cors(corsOptions), wrap(createQuestionREST))
 
-app.get('/sampleQuestionTemplate', cors(corsOptions), (req,res) => {
-  res.writeHead(200, {'Content-disposition': 'attachment; filename=sampleQuestionTemplate.csv'})
-  fs.createReadStream("./downloads/sampleQuestionTemplate.csv").pipe(res)
+app.get('/sampleQuestionTemplate', cors(corsOptions), (req, res) => {
+  res.writeHead(200, { 'Content-disposition': 'attachment; filename=sampleQuestionTemplate.csv' })
+  fs.createReadStream('./downloads/sampleQuestionTemplate.csv').pipe(res)
 })
 
 app.use(fileUpload({

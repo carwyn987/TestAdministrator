@@ -1,0 +1,7 @@
+Groups,Question Text,Question Type,Choice 1,Choice 2,Choice 3,Choice 4,Choice 5,Answer
+CSE214,What is the worst time complexity to insert an element to a singly linked list?,multichoice,O(n),O(logn),O(1),O(2n),O(nlogn),1
+CSE101,Semicolons are required on Java statements.,boolean,,,,,,TRUE
+CSE312,"Describe a technology with a moral, legal, or ethical issue.",freeform,,,,,,
+CSE214,What is the worst time complexity to insert an element to an array?,multichoice,O(n),O(logn),O(1),O(2n),O(nlogn),4
+CSE101,Semicolons are required on Java functions.,boolean,,,,,,FALSE
+CSE312,"Describe a technology without a moral, legal, or ethical issue.",freeform,,,,,,
