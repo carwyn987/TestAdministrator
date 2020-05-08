@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import path from 'path'
 import cors from 'cors'
 import fileUpload from 'express-fileupload'
+import fs from 'fs'
 
 /* eslint-disable no-unused-vars */
 import env from '../env'
@@ -47,6 +48,11 @@ app.options('/question/:id', cors(corsOptions))
 app.delete('/question/:id', cors(corsOptions), wrap(deleteQuestion))
 
 app.post('/question', cors(corsOptions), wrap(createQuestionREST))
+
+app.get('/sampleQuestionTemplate', cors(corsOptions), (req,res) => {
+  res.writeHead(200, {'Content-disposition': 'attachment; filename=sampleQuestionTemplate.csv'})
+  fs.createReadStream("./downloads/sampleQuestionTemplate.csv").pipe(res)
+})
 
 app.use(fileUpload({
   preserveExtension: true,

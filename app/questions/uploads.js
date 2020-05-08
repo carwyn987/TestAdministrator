@@ -6,8 +6,13 @@ import { createQuestion } from './question'
 
 const fileDelete = util.promisify(fs.unlink)
 
-chokidar.watch('tmp').on('add', (event) => {
-  processUpload(event)
+chokidar.watch('tmp').on('add', async (event) => {
+  try{
+    await processUpload(event)
+  }catch(e){
+    //console.log('Error ProcessUpload', e)
+  }
+  
 })
 // addDir tmp
 // ^ is console logged on server startup
@@ -22,6 +27,7 @@ async function processUpload(event) {
   // put data into database
   // eslint-disable-next-line no-restricted-syntax
   for (const q of questionArr) {
+    //console.log("Q: ",q)
     const dbq = {
       questionType: q['Question Type'],
       questionText: q['Question Text'],
@@ -29,7 +35,7 @@ async function processUpload(event) {
       multiChoiceAnswer: getAnswerInt(q.Answer),
       boolAnswer: getAnswerBool(q.Answer),
     }
-    // console.log(dbq)
+    //console.log('DBQ: ',dbq)
     // eslint-disable-next-line no-await-in-loop
     await createQuestion(dbq)
   }
